@@ -75,19 +75,24 @@ public class Stack<T> implements Iterable<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return new StackIterator();
+        return new StackIterator(top);
     }
 
     private class StackIterator implements Iterator<T> {
 
-        int iteratorModCount = modCount;
+        int iteratorModCount;
         Node<T> current;
+
+        private StackIterator(Node<T> top) {
+            this.current = top;
+            this.iteratorModCount = modCount;
+        }
 
         @Override
         public boolean hasNext() {
             if (iteratorModCount != modCount) throw new ConcurrentModificationException("Stack modified during iteration");
 
-            return current.next != null;
+            return current != null;
         }
 
         @Override
