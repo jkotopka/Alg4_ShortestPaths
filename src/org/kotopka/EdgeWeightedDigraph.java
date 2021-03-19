@@ -65,15 +65,15 @@ public class EdgeWeightedDigraph {
      * @return An object of type Iterable containing all of the edges in this digraph. Order should be considered arbitrary.
      */
     public Iterable<DirectedEdge> edges() {
-        Bag<DirectedEdge> q = new Bag<>();
+        Bag<DirectedEdge> bag = new Bag<>();
 
         for (Bag<DirectedEdge> b : adj) {
             for (DirectedEdge e : b) {
-                if (e != null) q.add(e);
+                if (e != null) bag.add(e);
             }
         }
 
-        return q;
+        return bag;
     }
 
     /**
