@@ -7,16 +7,12 @@ import java.util.Arrays;
  */
 public class DijkstraSP {
 
-    private final EdgeWeightedDigraph G;
-    private final int s;
     private final double[] distTo;
     private final DirectedEdge[] edgeTo;
     private final IndexMinPQ<Double> edgePQ;    // v is index, weight is key
 
     public DijkstraSP(EdgeWeightedDigraph G, int s) {
         int V = G.V();
-        this.G = G;
-        this.s = s;
         this.distTo = new double[V];
         this.edgeTo = new DirectedEdge[V];
         this.edgePQ = new IndexMinPQ<>(V);
