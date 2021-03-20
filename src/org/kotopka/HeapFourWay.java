@@ -116,8 +116,8 @@ public class HeapFourWay<T extends Comparable<T>> {
     public boolean contains(T key) {
         if (key == null) throw new IllegalArgumentException("contains() cannot accept null values");
 
-        for (T k : heap) {
-            if (k != null && key.compareTo(k) == 0) return true;
+        for (int i = 1; i < heap.length; i++) {
+            if (key.compareTo(heap[i]) == 0) return true;
         }
 
         return false;
