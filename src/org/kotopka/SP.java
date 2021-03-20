@@ -31,11 +31,14 @@ public class SP {
 
     private void findPaths(Queue<Integer> edgeQueue, int v) {
         for (DirectedEdge e : G.adj(v)) {
-            if (Double.compare(distTo[e.to()], Double.POSITIVE_INFINITY) == 0) {
-//            if (distTo[e.to()] == Double.POSITIVE_INFINITY) {
-                edgeQueue.enqueue(e.to());
+            int w = e.to();
+
+            // enqueue unseen vertices
+            if (Double.compare(distTo[w], Double.POSITIVE_INFINITY) == 0) {
+                edgeQueue.enqueue(w);
             }
 
+            // relax the current edge
             relax(e);
         }
     }
@@ -46,16 +49,18 @@ public class SP {
         double pathWeight = distTo[v] + e.weight();
 
         if (distTo[w] > pathWeight) {
+
+            // edge is eligible
             distTo[w] = pathWeight;
             edgeTo[w] = e;
-//            System.out.println("relaxing: " + e);
         }
+        // else, edge is ineligible
     }
 
     public double distTo(int v) { return distTo[v]; }
 
     public Iterable<DirectedEdge> pathTo(int v) {
-//        if (! hasPathTo(v)) return null;
+        if (! hasPathTo(v)) return null;
 
         Stack<DirectedEdge> path = new Stack<>();
 
@@ -70,6 +75,7 @@ public class SP {
         return distTo[v] < Double.POSITIVE_INFINITY;
     }
 
+    // TODO: test client p 645
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Error: missing commandline argument.");
@@ -77,10 +83,16 @@ public class SP {
         }
 
         EdgeWeightedDigraph ewd = GraphLoader.load(args[0]);
-        SP sp = new SP(ewd, 6);
+        SP sp = new SP(ewd, 8);
+        int destination = 1
+                ;
 
-        for (DirectedEdge e : sp.pathTo(5)) {
-            System.out.println(e);
+        if (sp.hasPathTo(destination)) {
+            for (DirectedEdge e : sp.pathTo(destination)) {
+                System.out.println(e);
+            }
+        } else {
+            System.out.println("No path to " + destination);
         }
     }
 
