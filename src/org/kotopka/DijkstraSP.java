@@ -9,13 +9,13 @@ public class DijkstraSP {
 
     private final double[] distTo;
     private final DirectedEdge[] edgeTo;
-    private final IndexMinPQ<Double> edgePQ;    // v is index, weight is key
+    private final IndexDaryMinPQ<Double> edgePQ;    // v is index, weight is key
 
     public DijkstraSP(EdgeWeightedDigraph G, int s) {
         int V = G.V();
         this.distTo = new double[V];
         this.edgeTo = new DirectedEdge[V];
-        this.edgePQ = new IndexMinPQ<>(V);
+        this.edgePQ = new IndexDaryMinPQ<>(4, V);
 
         Arrays.fill(distTo, Double.POSITIVE_INFINITY);
 
