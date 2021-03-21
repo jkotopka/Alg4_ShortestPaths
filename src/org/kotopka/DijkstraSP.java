@@ -7,22 +7,28 @@ import java.util.Arrays;
  */
 public class DijkstraSP {
 
+    private final int V;
     private final double[] distTo;
     private final DirectedEdge[] edgeTo;
     private final IndexDaryMinPQ<Double> edgePQ;    // v is index, weight is key
 
-    public DijkstraSP(EdgeWeightedDigraph G, int s) {
-        int V = G.V();
+    public DijkstraSP(EdgeWeightedDigraph G, int source) {
+        if (G == null) throw new IllegalArgumentException("Graph cannot be null");
+
+        this.V = G.V();
+
+        validateVertex(source);
+
         this.distTo = new double[V];
         this.edgeTo = new DirectedEdge[V];
-        this.edgePQ = new IndexDaryMinPQ<>(4, V);
+        this.edgePQ = new IndexDaryMinPQ<>(4, V);   // using a 4-ary heap
 
         Arrays.fill(distTo, Double.POSITIVE_INFINITY);
 
-        distTo[s] = 0.0;
-        edgeTo[s] = null;
+        distTo[source] = 0.0;
+        edgeTo[source] = null;
 
-        edgePQ.insert(0, 0.0);
+        edgePQ.insert(source, 0.0);
 
         while (!edgePQ.isEmpty()) {
             relax(G, edgePQ.delMin());
@@ -50,9 +56,18 @@ public class DijkstraSP {
         }
     }
 
-    public double distTo(int v) { return distTo[v]; }
+    private void validateVertex(int vertex) {
+        if (vertex < 0 || vertex >= V) throw new IllegalArgumentException("Invalid vertex " + vertex);
+    }
+
+    public double distTo(int v) {
+        validateVertex(v);
+        return distTo[v];
+    }
 
     public Iterable<DirectedEdge> pathTo(int v) {
+        validateVertex(v);
+
         if (! hasPathTo(v)) return null;
 
         Stack<DirectedEdge> path = new Stack<>();
@@ -65,6 +80,8 @@ public class DijkstraSP {
     }
 
     public boolean hasPathTo(int v) {
+        validateVertex(v);
+
         return distTo[v] < Double.POSITIVE_INFINITY;
     }
 
@@ -76,8 +93,9 @@ public class DijkstraSP {
         }
 
         EdgeWeightedDigraph ewd = GraphLoader.load(args[0]);
-        DijkstraSP sp = new DijkstraSP(ewd, 0);
-        int destination = 6;
+
+        DijkstraSP sp = new DijkstraSP(ewd, 6);
+        int destination = 3;
 
         if (sp.hasPathTo(destination)) {
             for (DirectedEdge e : sp.pathTo(destination)) {
