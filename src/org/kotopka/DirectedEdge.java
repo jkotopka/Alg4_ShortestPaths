@@ -22,6 +22,15 @@ public class DirectedEdge {
     }
 
     /**
+     * {@code DirectedEdge} Constructor for "unweighted" digraph edge, sets {@code weight} to {@code 0.0}
+     * @param v the origin vertex of this edge
+     * @param w the destination vertex of this edge
+     */
+    public DirectedEdge(int v, int w) {
+        this(v, w, 0.0);
+    }
+
+    /**
      * {@code from()} - returns the origin vertex of this edge
      * @return origin vertex
      */
