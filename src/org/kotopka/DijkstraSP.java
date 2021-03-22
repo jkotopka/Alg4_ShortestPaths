@@ -12,7 +12,7 @@ public class DijkstraSP {
     private final DirectedEdge[] edgeTo;
     private final IndexDaryMinPQ<Double> edgePQ;    // v is index, weight is key
 
-    public DijkstraSP(EdgeWeightedDigraph G, int source) {
+    public DijkstraSP(Digraph G, int source) {
         if (G == null) throw new IllegalArgumentException("Graph cannot be null");
 
         this.V = G.V();
@@ -36,7 +36,7 @@ public class DijkstraSP {
 
     }
 
-    private void relax(EdgeWeightedDigraph G, int v) {
+    private void relax(Digraph G, int v) {
 
         // for all edges incident to vertex v
         for (DirectedEdge e : G.adj(v)) {
@@ -94,8 +94,8 @@ public class DijkstraSP {
 
         EdgeWeightedDigraph ewd = GraphLoader.load(args[0]);
 
-        DijkstraSP sp = new DijkstraSP(ewd, 6);
-        int destination = 3;
+        DijkstraSP sp = new DijkstraSP(ewd, 0);
+        int destination = 24;
 
         if (sp.hasPathTo(destination)) {
             for (DirectedEdge e : sp.pathTo(destination)) {
