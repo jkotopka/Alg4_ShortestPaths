@@ -4,7 +4,7 @@ package org.kotopka;
  * {@code EdgeWeightedDigraph} - Data type representing an edge-weighted digraph.
  * Adapted from <a href="https://algs4.cs.princeton.edu/home/">Algorithms 4th ed.</a> by Robert Sedgewick and Kevin Wayne
  */
-public class EdgeWeightedDigraph {
+public class EdgeWeightedDigraph implements Digraph {
 
     private final int V;
     private final Bag<DirectedEdge>[] adj;
@@ -30,6 +30,7 @@ public class EdgeWeightedDigraph {
      * {@code addEdge()} - Adds an edge to this edge-weighted digraph
      * @param e the edge to be added
      */
+    @Override
     public void addEdge(DirectedEdge e) {
         if (e == null) throw new IllegalArgumentException("DirectedEdge argument is null");
 
@@ -42,6 +43,7 @@ public class EdgeWeightedDigraph {
      * @param v The origin vertex incident to the desired edges
      * @return An object of type Iterable. Order should be considered arbitrary.
      */
+    @Override
     public Iterable<DirectedEdge> adj(int v) {
         if (V <= 0) throw new IllegalArgumentException("Invalid vertex");
 
@@ -52,18 +54,21 @@ public class EdgeWeightedDigraph {
      * {@code V()} - The number of vertices in this digraph.
      * @return the number of vertices
      */
+    @Override
     public int V() { return V; }
 
     /**
      * {@code E()} - The number of edges in this digraph
      * @return the number of edges
      */
+    @Override
     public int E() { return E; }
 
     /**
      * edges() - Returns an object of type Iterable of all edges in the edge-weighted digraph.
      * @return An object of type Iterable containing all of the edges in this digraph. Order should be considered arbitrary.
      */
+    @Override
     public Iterable<DirectedEdge> edges() {
         Bag<DirectedEdge> bag = new Bag<>();
 
