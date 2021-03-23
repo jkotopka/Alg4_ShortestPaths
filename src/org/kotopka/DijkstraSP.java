@@ -21,7 +21,7 @@ public class DijkstraSP {
 
         this.distTo = new double[V];
         this.edgeTo = new DirectedEdge[V];
-        this.edgePQ = new IndexDaryMinPQ<>(4, V);   // using a 4-ary heap
+        this.edgePQ = new IndexDaryMinPQ<>(IndexDaryMinPQ.FOUR_WAY_HEAP, V);   // using a 4-ary heap
 
         Arrays.fill(distTo, Double.POSITIVE_INFINITY);
 
