@@ -3,21 +3,21 @@ package org.kotopka;
 import java.util.Arrays;
 
 /**
- * {@code EdgeWeightedDAGSP} - Finds shortest-paths-tree in acyclic edge-weighted digraphs based on traversing the
+ * {@code AcyclicSP} - Finds shortest-paths-tree in acyclic edge-weighted digraphs based on traversing the
  * nodes in topological order. Note: the graph MUST be a DAG.
  */
-public class EdgeWeightedDAGSP {
+public class AcyclicSP {
 
     private final double[] distTo;
     private final DirectedEdge[] edgeTo;
 
     /**
-     * {@code EdgeWeightedDAGSP} - Constructor. Creates a shortest-paths-tree from an acyclic digraph from {@code source}.
+     * {@code AcyclicSP} - Constructor. Creates a shortest-paths-tree from an acyclic digraph from {@code source}.
      * @param G The digraph
      * @param source source vertex of the SPT
      * @throws IllegalArgumentException if the graph is not a DAG
      */
-    public EdgeWeightedDAGSP(Digraph G, int source) {
+    public AcyclicSP(Digraph G, int source) {
         Topological topological = new Topological(G);
 
         if (!topological.hasOrder()) throw new IllegalArgumentException("Graph must be a DAG");
@@ -75,7 +75,7 @@ public class EdgeWeightedDAGSP {
 
         EdgeWeightedDigraph ewd = GraphLoader.load(args[0]);
 
-        EdgeWeightedDAGSP sp = new EdgeWeightedDAGSP(ewd, 5);
+        AcyclicSP sp = new AcyclicSP(ewd, 5);
         int destination = 0;
 
         if (sp.hasPathTo(destination)) {
