@@ -8,14 +8,15 @@ public class Topological {
 
     private final boolean[] marked;
     private final Stack<Integer> reversePostOrder;
-    private boolean hasCycle;
+    private boolean isDAG;
 
     public Topological(Digraph G) {
         this.marked = new boolean[G.V()];
         this.reversePostOrder = new Stack<>();
+        this.isDAG = true;
 
         for (int v = 0; v < G.V(); v++) {
-            if (!hasCycle && !marked[v]) dfs(G, v, v);
+            if (isDAG && !marked[v]) dfs(G, v, v);
         }
     }
 
@@ -26,7 +27,7 @@ public class Topological {
             int w = e.to();
 
             if (s == w) {
-                hasCycle = true;
+                isDAG = false;
                 return;
             }
 
@@ -36,7 +37,7 @@ public class Topological {
         reversePostOrder.push(v);
     }
 
-    public boolean hasOrder() { return !hasCycle; }
+    public boolean hasOrder() { return isDAG; }
 
     public Iterable<Integer> order() { return reversePostOrder; }
 
