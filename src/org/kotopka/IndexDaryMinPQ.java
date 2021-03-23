@@ -10,6 +10,10 @@ import java.util.Random;
 
 public class IndexDaryMinPQ<T extends Comparable<T>> {
 
+    public static final int TWO_WAY_HEAP   = 2;
+    public static final int THREE_WAY_HEAP = 3;
+    public static final int FOUR_WAY_HEAP  = 4;
+
     private final int d;
     private final T[] keys;
     private final int[] pq;
