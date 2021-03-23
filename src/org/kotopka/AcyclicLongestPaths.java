@@ -8,6 +8,7 @@ import java.util.Arrays;
  */
 public class AcyclicLongestPaths {
 
+    private final int size;
     private final double[] distTo;
     private final DirectedEdge[] edgeTo;
 
@@ -18,11 +19,16 @@ public class AcyclicLongestPaths {
      * @throws IllegalArgumentException if the graph is not a DAG
      */
     public AcyclicLongestPaths(Digraph G, int source) {
+        if (G == null) throw new IllegalArgumentException("Graph cannot be null");
+
+        size = G.V();
+
+        validateVertex(source);
+
         Topological topological = new Topological(G);
 
         if (!topological.hasOrder()) throw new IllegalArgumentException("Graph must be a DAG");
 
-        int size = G.V();
         this.distTo = new double[size];
         this.edgeTo = new DirectedEdge[size];
 
@@ -49,15 +55,24 @@ public class AcyclicLongestPaths {
         }
     }
 
+    private void validateVertex(int vertex) {
+        if (vertex < 0 || vertex >= size) throw new IllegalArgumentException("Invalid vertex " + vertex);
+    }
+
     public boolean hasPathTo(int v) {
+        validateVertex(v);
+
         return distTo[v] < Double.POSITIVE_INFINITY;
     }
 
     public double distTo(int v) {
+        validateVertex(v);
         return distTo[v];
     }
 
     public Iterable<DirectedEdge> pathTo(int v) {
+        validateVertex(v);
+
         Stack<DirectedEdge> path = new Stack<>();
 
         for (int x = v; edgeTo[x] != null; x = edgeTo[x].from()) {
