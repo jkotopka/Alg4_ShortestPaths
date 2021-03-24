@@ -5,7 +5,8 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
- * {@code IndexDaryMinPQ} - d-ary minimum heap indexed priority queue implementation using a 0-indexed array. {@code d} must be between 2 and 4, inclusive
+ * {@code IndexDaryMinPQ} - d-ary minimum heap indexed priority queue implementation using a 0-indexed array. {@code d}
+ * must be between 2 and 4, inclusive
  */
 
 public class IndexDaryMinPQ<T extends Comparable<T>> {
@@ -21,7 +22,8 @@ public class IndexDaryMinPQ<T extends Comparable<T>> {
     private int size;
 
     /**
-     * {@code IndexDaryMinPQ()} - Constructor. Creates a new {@code d} d-ary indexed minimum priority queue with space for {@code capacity} elements.
+     * {@code IndexDaryMinPQ()} - Constructor. Creates a new {@code d}-ary indexed minimum priority queue with space
+     * for {@code capacity} elements.
      * @param d the dimension of the heap, between 2 for binary heap, and 4 for 4-ary heap
      * @param capacity the maximum number of elements in this priority queue
      * @throws IllegalArgumentException if the argument {@code d} is not between 2 and 4, inclusive
