@@ -4,13 +4,12 @@ public class EdgeWeightedDC {
 
     private final boolean[] marked;
     private final DirectedEdge[] edgeTo;
-    private final Stack<DirectedEdge> cycle;
     private final boolean[] onStack;
+    private Stack<DirectedEdge> cycle;
 
     public EdgeWeightedDC(Digraph G) {
         this.marked = new boolean[G.V()];
         this.edgeTo = new DirectedEdge[G.V()];
-        this.cycle = new Stack<>();
         this.onStack = new boolean[G.V()];
 
         for (int v = 0; v < G.V(); v++) {
@@ -32,9 +31,11 @@ public class EdgeWeightedDC {
 
                 dfs(G, w);
             } else if (onStack[w]) {
-                // TODO: ALL cycles from a given vertex, right now it won't find ALL cycles from a given vertex
                 // cycle detected
+                // TODO: fix this to return all cycles AND work with BellmanFordSP
+                cycle = new Stack<>();
                 DirectedEdge x = e;
+
                 for (; x.from() != w; x = edgeTo[x.from()]) {
                     cycle.push(x);
                 }
