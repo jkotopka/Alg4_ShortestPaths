@@ -27,7 +27,7 @@ public class AcyclicSP {
 
         Topological topological = new Topological(G);
 
-        if (!topological.hasOrder()) throw new IllegalArgumentException("Graph must be a DAG");
+        if (!topological.hasOrder()) throw new UnsupportedOperationException("Graph must be a DAG");
 
         this.distTo = new double[size];
         this.edgeTo = new DirectedEdge[size];
