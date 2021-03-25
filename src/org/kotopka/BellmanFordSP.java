@@ -22,6 +22,10 @@ public class BellmanFordSP {
 
         Arrays.fill(distTo, Double.POSITIVE_INFINITY);
 
+        distTo[source] = 0.0;
+        queue.enqueue(source);
+        onQueue[source] = true;
+
         while (!queue.isEmpty() && !hasNegativeCycle()) {
             int v = queue.dequeue();
             onQueue[v] = false;
@@ -42,15 +46,16 @@ public class BellmanFordSP {
                     queue.enqueue(w);
                     onQueue[w] = true;
                 }
-                if (cost++ % size == 0) {
-                    findNegativeCycle();
-                }
+            }
+            if (++cost % G.V() == 0) {
+                findNegativeCycle();
+                if (hasNegativeCycle()) return;
             }
         }
     }
 
     private void findNegativeCycle() {
-        EdgeWeightedDigraph ewd = new EdgeWeightedDigraph(size);
+        EdgeWeightedDigraph ewd = new EdgeWeightedDigraph(edgeTo.length);
 
         for (int v = 0; v < size; v++) {
             if (edgeTo[v] != null) {
@@ -80,6 +85,7 @@ public class BellmanFordSP {
 
     public Iterable<DirectedEdge> pathTo(int v) {
         validateVertex(v);
+        if (hasNegativeCycle()) throw new UnsupportedOperationException("Negative cycle exists");
 
         Stack<DirectedEdge> path = new Stack<>();
 
@@ -98,5 +104,32 @@ public class BellmanFordSP {
         if (!hasNegativeCycle()) throw new NoSuchElementException("No negative cycle found");
 
         return cycle;
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Error: missing commandline argument.");
+            System.exit(-1);
+        }
+
+        EdgeWeightedDigraph ewd = GraphLoader.load(args[0]);
+
+        BellmanFordSP sp = new BellmanFordSP(ewd, 6);
+        int destination = 3;
+
+        if (!sp.hasNegativeCycle() && sp.hasPathTo(destination)) {
+            for (DirectedEdge e : sp.pathTo(destination)) {
+                System.out.println(e);
+            }
+        } else {
+            System.out.println("No path to " + destination);
+        }
+
+        if (sp.hasNegativeCycle()) {
+            System.out.println("Negative cycle:");
+            for (DirectedEdge e : sp.negativeCycle()) {
+                System.out.println(e);
+            }
+        }
     }
 }
